@@ -30,4 +30,5 @@ public class TwitterToKafka implements CommandLineRunner {
 		streamInitializer.init();
 		twitterStreamRunner.start();
 	}
+
 }

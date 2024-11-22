@@ -62,7 +62,7 @@
                 <configuration>
                     <image>
                         <name>
-                            ${project.groupId}/twitter.to.kafka.service:${project.version}
+                            ${project.groupId}/twitter.to.kafka:${project.version}
                         </name>
                     </image>
                 </configuration>
