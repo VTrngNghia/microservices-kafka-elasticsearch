@@ -1,11 +1,10 @@
 package com.microservices.demo.twittertokafka.runner;
 
-import com.microservices.demo.appconfig.TwitterToKafkaConfig;
+import com.microservices.demo.appconfig.TwitterConfig;
 import com.microservices.demo.twittertokafka.listener.TwitterKafkaStatusListener;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import twitter4j.FilterQuery;
@@ -20,11 +19,10 @@ import java.util.Arrays;
 	value = "twitter-to-kafka.enable-mock-tweets",
 	havingValue = "false"
 )
+@Slf4j
 public class TwitterKafkaStreamRunner implements StreamRunner {
-	private static final Logger log = LoggerFactory.getLogger(
-		TwitterKafkaStreamRunner.class);
 
-	private final TwitterToKafkaConfig twitterToKafkaConfig;
+	private final TwitterConfig twitterConfig;
 
 	private final TwitterKafkaStatusListener twitterKafkaStatusListener;
 
@@ -46,7 +44,7 @@ public class TwitterKafkaStreamRunner implements StreamRunner {
 	}
 
 	private void addFilter() {
-		String[] keywords = twitterToKafkaConfig.getTwitterKeywords()
+		String[] keywords = twitterConfig.getTwitterKeywords()
 			.toArray(new String[0]);
 		FilterQuery filterQuery = new FilterQuery(keywords);
 		twitterStream.filter(filterQuery);

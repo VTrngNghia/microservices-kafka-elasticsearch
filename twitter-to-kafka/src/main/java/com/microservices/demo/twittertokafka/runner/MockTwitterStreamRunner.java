@@ -1,6 +1,6 @@
 package com.microservices.demo.twittertokafka.runner;
 
-import com.microservices.demo.appconfig.TwitterToKafkaConfig;
+import com.microservices.demo.appconfig.TwitterConfig;
 import com.microservices.demo.twittertokafka.exception.TwitterToKafkaServiceException;
 import com.microservices.demo.twittertokafka.listener.TwitterKafkaStatusListener;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +62,7 @@ public class MockTwitterStreamRunner implements StreamRunner {
 
 	private static final String TWITTER_STATUS_DATE_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 
-	private final TwitterToKafkaConfig twitterToKafkaServiceConfig;
+	private final TwitterConfig twitterToKafkaServiceConfig;
 
 	private final TwitterKafkaStatusListener twitterKafkaStatusListener;
 
