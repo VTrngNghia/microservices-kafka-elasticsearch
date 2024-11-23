@@ -6,6 +6,7 @@
     <modules>
         <module>app-config</module>
         <module>twitter-to-kafka</module>
+        <module>kafka-to-elastic</module>
         <module>kafka</module>
         <module>kafka/kafka-model</module>
         <module>kafka/kafka-producer</module>
@@ -36,6 +37,7 @@
         <spring-retry.version>2.0.10</spring-retry.version>
         <print-kafka.version>3.3.0</print-kafka.version>
         <twitter4j.version>4.0.7</twitter4j.version>
+        <aspectj.version>1.9.22.1</aspectj.version>
         <lombok.version>1.18.36</lombok.version>
         <avro.version>1.10.0</avro.version>
         <kafka-avro-serializer.version>7.7.1</kafka-avro-serializer.version>
@@ -69,6 +71,11 @@
             <dependency>
                 <groupId>com.microservices.demo</groupId>
                 <artifactId>kafka-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>kafka-consumer</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -127,6 +134,12 @@
                 <version>${spring-kafka.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+                <scope>runtime</scope>
+            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

@@ -47,6 +47,4 @@ public class TwitterKafkaProducer implements KafkaProducer<Long, TwitterAvroMode
 			}
 		};
 	}
-
-
 }
