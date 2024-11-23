@@ -2,16 +2,14 @@ spring:
   application:
     name: config-server
   profiles:
-    active: native,git
+    active: git
   cloud:
     config:
       server:
         git:
-          uri: git@github.com:VTrngNghia/microservices-config-vault.git
+          uri: https://github.com/VTrngNghia/microservices-config-vault.git
           default-label: main
-          clone-on-start: true
-          host-key-algorithm: ssh-rsa
-          private-key: '/home/nghia/.ssh/nghia-5600-ubuntu_rsa'
+          clone-on-start: false
   security:
     user:
       name: demo

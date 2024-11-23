@@ -6,6 +6,8 @@ services:
       - "5005:5005"
     volumes:
       - "./docker-logs:/workspace/twitter-to-kafka/logs"
+    depends_on:
+      - config-server
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -Xms128m -Xmx256m"
       - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=info"
@@ -16,5 +18,15 @@ services:
       - "TWITTER-TO-KAFKA_ENABLE-MOCK-TWEETS=true"
     networks:
       - ${GLOBAL_NETWORK:-services}
-    # retry to start the container in case of failure
     restart: on-failure
+  config-server:
+    image: ${GROUP_ID}/config.server:${SERVICE_VERSION:-latest}
+    ports:
+      - "5006:5006"
+      - "8888:8888"
+    volumes:
+      - "./docker-logs:/workspace/config-server/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx256m"
+    networks:
+      - ${GLOBAL_NETWORK:-services}

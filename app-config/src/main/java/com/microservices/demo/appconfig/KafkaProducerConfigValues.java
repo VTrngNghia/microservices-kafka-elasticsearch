@@ -1,6 +1,5 @@
 package com.microservices.demo.appconfig;
 
-import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -26,9 +25,4 @@ public class KafkaProducerConfigValues {
 	private Integer requestTimeoutMs;
 
 	private Integer retryCount;
-
-	@PostConstruct
-	public void init() {
-		int a = 1;
-	}
 }
