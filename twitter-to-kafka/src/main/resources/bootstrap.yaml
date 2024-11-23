@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: twitter-to-kafka
+  profiles:
+    active: twitter-to-kafka
+  cloud:
+    config:
+      name: twitter-to-kafka,config-client
+      uri: http://localhost:8888
+      username: demo
+      password: demo
+
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.cloud: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.cloud.config.client: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env, configprops

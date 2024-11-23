@@ -1,11 +1,12 @@
 package com.microservices.demo.appconfig;
 
+import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Data
-@Configuration
+@Component
 @ConfigurationProperties(prefix = "kafka-producer-config")
 public class KafkaProducerConfigValues {
 	private String keySerializerClass;
@@ -26,4 +27,8 @@ public class KafkaProducerConfigValues {
 
 	private Integer retryCount;
 
+	@PostConstruct
+	public void init() {
+		int a = 1;
+	}
 }

@@ -5,7 +5,6 @@ import com.microservices.demo.twittertokafka.exception.TwitterToKafkaServiceExce
 import com.microservices.demo.twittertokafka.listener.TwitterKafkaStatusListener;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import twitter4j.Status;
 import twitter4j.TwitterException;
@@ -19,10 +18,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(
-	value = "twitter-to-kafka.enable-mock-tweets",
-	havingValue = "true"
-)
+//@ConditionalOnProperty(
+//	value = "twitter-to-kafka.enable-mock-tweets",
+//	havingValue = "true"
+//)
 @Slf4j
 public class MockTwitterStreamRunner implements StreamRunner {
 

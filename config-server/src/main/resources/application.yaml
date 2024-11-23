@@ -1,0 +1,10 @@
+server:
+  port: 8888
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Exposes all endpoints; adjust as needed for security
+  endpoint:
+    health:
+      show-details: always  # Provides detailed health information

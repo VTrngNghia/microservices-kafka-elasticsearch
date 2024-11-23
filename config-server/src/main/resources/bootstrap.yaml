@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native,git
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:VTrngNghia/microservices-config-vault.git
+          default-label: main
+          clone-on-start: true
+          host-key-algorithm: ssh-rsa
+          private-key: '/home/nghia/.ssh/nghia-5600-ubuntu_rsa'
+  security:
+    user:
+      name: demo
+      password: demo
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.config: DEBUG
+    org.springframework.cloud.config.server: DEBUG
+    org.springframework.security: DEBUG
