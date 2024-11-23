@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import twitter4j.Status;
 import twitter4j.StatusAdapter;
 
-
 @Component
 @Slf4j
 @RequiredArgsConstructor

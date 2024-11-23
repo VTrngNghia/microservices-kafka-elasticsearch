@@ -6,6 +6,11 @@ spring:
   cloud:
     config:
       name: kafka-to-elastic,config-client
-      uri: http://localhost:8888
+      uri: ${CONFIG_SERVER_URI:http://localhost:8888}
       username: demo
       password: demo
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans
