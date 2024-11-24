@@ -11,7 +11,7 @@
     </parent>
 
 
-    <artifactId>elastic-index-client</artifactId>
+    <artifactId>elastic-indexer</artifactId>
 
     <dependencies>
         <dependency>

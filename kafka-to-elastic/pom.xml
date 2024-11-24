@@ -22,7 +22,7 @@
         </dependency>
         <dependency>
             <groupId>com.microservices.demo</groupId>
-            <artifactId>elastic-index-client</artifactId>
+            <artifactId>elastic-indexer</artifactId>
         </dependency>
         <dependency>
             <groupId>com.microservices.demo</groupId>

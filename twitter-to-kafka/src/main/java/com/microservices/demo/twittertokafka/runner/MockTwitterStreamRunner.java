@@ -18,10 +18,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
-//@ConditionalOnProperty(
-//	value = "twitter-to-kafka.enable-mock-tweets",
-//	havingValue = "true"
-//)
 @Slf4j
 public class MockTwitterStreamRunner implements StreamRunner {
 

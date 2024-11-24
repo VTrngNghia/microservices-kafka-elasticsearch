@@ -83,7 +83,7 @@
             </dependency>
             <dependency>
                 <groupId>com.microservices.demo</groupId>
-                <artifactId>elastic-index-client</artifactId>
+                <artifactId>elastic-indexer</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -170,7 +170,6 @@
                 <artifactId>twitter4j-stream</artifactId>
                 <version>${twitter4j.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>

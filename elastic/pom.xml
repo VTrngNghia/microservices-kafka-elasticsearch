@@ -13,6 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>elastic-model</module>
-        <module>elastic-index-client</module>
+        <module>elastic-indexer</module>
     </modules>
 </project>
