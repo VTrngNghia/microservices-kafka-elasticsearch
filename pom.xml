@@ -78,7 +78,7 @@
             </dependency>
             <dependency>
                 <groupId>com.microservices.demo</groupId>
-                <artifactId>elastic-model</artifactId>
+                <artifactId>elastic-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,6 +1,6 @@
-package com.microservices.demo.elastic.index.client.service;
+package com.microservices.demo.elastic.indexer.client.service;
 
-import com.microservices.demo.elastic.model.index.IndexModel;
+import com.microservices.demo.elastic.common.model.IndexModel;
 
 import java.util.List;
 

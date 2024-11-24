@@ -1,8 +1,8 @@
-package com.microservices.demo.elastic.index.client.service;
+package com.microservices.demo.elastic.indexer.client.service;
 
 import com.microservices.demo.appconfig.ElasticConfigValues;
-import com.microservices.demo.elastic.index.client.ElasticIndexUtil;
-import com.microservices.demo.elastic.model.index.TwitterIndexModel;
+import com.microservices.demo.elastic.common.model.ElasticTwitterStatus;
+import com.microservices.demo.elastic.indexer.client.ElasticIndexUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -18,15 +18,15 @@ import java.util.List;
 @ConditionalOnProperty(name = "elastic-config.is-repository", havingValue = "false")
 @RequiredArgsConstructor
 @Slf4j
-public class TwitterElasticManualIndexClient implements ElasticIndexClient<TwitterIndexModel> {
+public class TwitterElasticManualIndexClient implements ElasticIndexClient<ElasticTwitterStatus> {
 	private final ElasticConfigValues elasticConfigValues;
 
 	private final ElasticsearchOperations elasticsearchOperations;
 
-	private final ElasticIndexUtil<TwitterIndexModel> elasticIndexUtil;
+	private final ElasticIndexUtil<ElasticTwitterStatus> elasticIndexUtil;
 
 	@Override
-	public List<String> save(List<TwitterIndexModel> documents) {
+	public List<String> save(List<ElasticTwitterStatus> documents) {
 		List<IndexQuery> indexQueries = elasticIndexUtil
 			.getIndexQueries(documents);
 		List<String> ids = elasticsearchOperations.bulkIndex(
@@ -35,7 +35,7 @@ public class TwitterElasticManualIndexClient implements ElasticIndexClient<Twitt
 		).stream().map(IndexedObjectInformation::id).toList();
 		log.info(
 			"Indexed docs type={} ids={}",
-			TwitterIndexModel.class.getName(),
+			ElasticTwitterStatus.class.getName(),
 			ids
 		);
 		return ids;

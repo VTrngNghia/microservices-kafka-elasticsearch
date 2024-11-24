@@ -1,8 +1,8 @@
 package com.microservices.demo.kafkatoelastic.consumer;
 
 import com.microservices.demo.appconfig.KafkaConfigValues;
-import com.microservices.demo.elastic.index.client.service.ElasticIndexClient;
-import com.microservices.demo.elastic.model.index.TwitterIndexModel;
+import com.microservices.demo.elastic.common.model.ElasticTwitterStatus;
+import com.microservices.demo.elastic.indexer.client.service.ElasticIndexClient;
 import com.microservices.demo.kafka.admin.KafkaAdminClient;
 import com.microservices.demo.kafka.avro.model.TwitterAvroModel;
 import com.microservices.demo.kafkatoelastic.transformer.AvroToElasticTransformer;
@@ -35,7 +35,7 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 
 	private final AvroToElasticTransformer avroToElasticTransformer;
 
-	private final ElasticIndexClient<TwitterIndexModel> elasticIndexClient;
+	private final ElasticIndexClient<ElasticTwitterStatus> elasticIndexClient;
 
 	@EventListener
 	public void onAppStarted(ApplicationStartedEvent event) {
@@ -67,7 +67,7 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 			offsets.toString()
 		);
 		log.info("Converting to elastic models");
-		List<TwitterIndexModel> elasticDocuments = avroToElasticTransformer
+		List<ElasticTwitterStatus> elasticDocuments = avroToElasticTransformer
 			.getElasticModels(messages);
 		log.info("Sending to elastic");
 		List<String> ids = elasticIndexClient.save(elasticDocuments);

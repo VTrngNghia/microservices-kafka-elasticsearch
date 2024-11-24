@@ -12,7 +12,8 @@
     <artifactId>elastic</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>elastic-model</module>
+        <module>elastic-common</module>
         <module>elastic-indexer</module>
+        <module>elastic-querier</module>
     </modules>
 </project>

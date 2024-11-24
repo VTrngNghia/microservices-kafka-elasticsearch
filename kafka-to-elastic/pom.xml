@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>com.microservices.demo</groupId>
-            <artifactId>elastic-model</artifactId>
+            <artifactId>elastic-common</artifactId>
         </dependency>
         <dependency>
             <groupId>com.microservices.demo</groupId>

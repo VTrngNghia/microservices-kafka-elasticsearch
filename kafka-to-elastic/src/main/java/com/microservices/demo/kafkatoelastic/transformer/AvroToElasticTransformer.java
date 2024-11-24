@@ -1,6 +1,6 @@
 package com.microservices.demo.kafkatoelastic.transformer;
 
-import com.microservices.demo.elastic.model.index.TwitterIndexModel;
+import com.microservices.demo.elastic.common.model.ElasticTwitterStatus;
 import com.microservices.demo.kafka.avro.model.TwitterAvroModel;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +13,9 @@ import static java.time.ZoneOffset.UTC;
 
 @Component
 public class AvroToElasticTransformer {
-	public List<TwitterIndexModel> getElasticModels(List<TwitterAvroModel> avroModels) {
+	public List<ElasticTwitterStatus> getElasticModels(List<TwitterAvroModel> avroModels) {
 		return avroModels.stream()
-			.map(avroModel -> TwitterIndexModel
+			.map(avroModel -> ElasticTwitterStatus
 				.builder()
 				.userId(avroModel.getUserId())
 				.id(valueOf(avroModel.getId()))

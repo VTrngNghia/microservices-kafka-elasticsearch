@@ -5,16 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.microservices.demo</groupId>
-        <artifactId>microservices-demo</artifactId>
+        <artifactId>elastic</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
     </parent>
+    <artifactId>elastic-querier</artifactId>
 
-    <artifactId>elastic-model</artifactId>
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+            <groupId>com.microservices.demo</groupId>
+            <artifactId>app-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.microservices.demo</groupId>
+            <artifactId>elastic-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

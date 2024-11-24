@@ -1,7 +1,7 @@
-package com.microservices.demo.elastic.index.client.service;
+package com.microservices.demo.elastic.indexer.client.service;
 
-import com.microservices.demo.elastic.index.client.repository.TwitterElasticsearchIndexRepository;
-import com.microservices.demo.elastic.model.index.TwitterIndexModel;
+import com.microservices.demo.elastic.common.model.ElasticTwitterStatus;
+import com.microservices.demo.elastic.indexer.client.repository.TwitterElasticsearchIndexRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -14,7 +14,7 @@ import java.util.stream.StreamSupport;
 @ConditionalOnProperty(name = "elastic-config.is-repository", havingValue = "true")
 @RequiredArgsConstructor
 @Slf4j
-public class TwitterElasticIndexClient<T extends TwitterIndexModel> implements ElasticIndexClient<T> {
+public class TwitterElasticIndexClient<T extends ElasticTwitterStatus> implements ElasticIndexClient<T> {
 	private final TwitterElasticsearchIndexRepository twitterElasticsearchIndexRepository;
 
 	@Override
@@ -23,11 +23,11 @@ public class TwitterElasticIndexClient<T extends TwitterIndexModel> implements E
 			.saveAll(documents);
 		List<String> ids = StreamSupport
 			.stream(repositoryResponse.spliterator(), false)
-			.map(TwitterIndexModel::getId)
+			.map(ElasticTwitterStatus::getId)
 			.toList();
 		log.info(
 			"Indexed docs type={} ids={}",
-			TwitterIndexModel.class.getName(),
+			ElasticTwitterStatus.class.getName(),
 			ids.size()
 		);
 		return ids;
