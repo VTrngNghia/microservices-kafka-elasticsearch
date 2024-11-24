@@ -8,9 +8,7 @@
         <module>twitter-to-kafka</module>
         <module>kafka-to-elastic</module>
         <module>kafka</module>
-        <module>kafka/kafka-model</module>
-        <module>kafka/kafka-producer</module>
-        <module>kafka/kafka-admin</module>
+        <module>elastic</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -35,13 +33,13 @@
         <spring-cloud.version>4.1.3</spring-cloud.version>
         <spring-boot.version>3.3.5</spring-boot.version>
         <spring-retry.version>2.0.10</spring-retry.version>
-        <print-kafka.version>3.3.0</print-kafka.version>
         <twitter4j.version>4.0.7</twitter4j.version>
         <aspectj.version>1.9.22.1</aspectj.version>
         <lombok.version>1.18.36</lombok.version>
         <avro.version>1.10.0</avro.version>
         <kafka-avro-serializer.version>7.7.1</kafka-avro-serializer.version>
         <maven.compile.plugin.version>3.13.0</maven.compile.plugin.version>
+        <elastic.version>8.16.1</elastic.version>
     </properties>
 
     <repositories>
@@ -78,6 +76,16 @@
                 <artifactId>kafka-consumer</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>elastic-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>elastic-index-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -86,9 +94,8 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
+                <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
                 <version>${spring-boot.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -99,6 +106,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-webflux</artifactId>
                 <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>
@@ -157,6 +170,18 @@
                 <artifactId>twitter4j-stream</artifactId>
                 <version>${twitter4j.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.elasticsearch</groupId>
+                <artifactId>elasticsearch</artifactId>
+                <version>${elastic.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-client</artifactId>
+                <version>${elastic.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.avro</groupId>
                 <artifactId>avro</artifactId>

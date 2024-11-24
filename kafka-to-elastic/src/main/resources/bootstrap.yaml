@@ -13,4 +13,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: beans
+        include: beans, env

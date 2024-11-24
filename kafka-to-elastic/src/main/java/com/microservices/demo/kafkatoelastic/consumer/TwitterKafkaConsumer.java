@@ -1,8 +1,11 @@
 package com.microservices.demo.kafkatoelastic.consumer;
 
 import com.microservices.demo.appconfig.KafkaConfigValues;
+import com.microservices.demo.elastic.index.client.service.ElasticIndexClient;
+import com.microservices.demo.elastic.model.index.TwitterIndexModel;
 import com.microservices.demo.kafka.admin.KafkaAdminClient;
 import com.microservices.demo.kafka.avro.model.TwitterAvroModel;
+import com.microservices.demo.kafkatoelastic.transformer.AvroToElasticTransformer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
@@ -29,6 +32,10 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 	private final KafkaAdminClient kafkaAdminClient;
 
 	private final KafkaConfigValues kafkaConfigValues;
+
+	private final AvroToElasticTransformer avroToElasticTransformer;
+
+	private final ElasticIndexClient<TwitterIndexModel> elasticIndexClient;
 
 	@EventListener
 	public void onAppStarted(ApplicationStartedEvent event) {
@@ -58,5 +65,9 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 			offsets.toString(),
 			Thread.currentThread().getId()
 		);
+		List<TwitterIndexModel> elasticModels = avroToElasticTransformer
+			.getElasticModels(messages);
+		List<String> ids = elasticIndexClient.save(elasticModels);
+		log.info("Saved documents to elasticsearch ids={}", ids);
 	}
 }

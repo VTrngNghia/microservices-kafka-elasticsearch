@@ -1,5 +1,16 @@
 version: '3.7'
 services:
+  config-server:
+    image: ${GROUP_ID}/config.server:${SERVICE_VERSION:-latest}
+    ports:
+      - "5007:5007"
+      - "8888:8888"
+    volumes:
+      - "./docker-logs:/workspace/config-server/logs"
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -Xms128m -Xmx256m"
+    networks:
+      - ${GLOBAL_NETWORK:-services}
   twitter-to-kafka:
     image: ${GROUP_ID}/twitter.to.kafka:${SERVICE_VERSION:-latest}
     ports:
@@ -36,6 +47,9 @@ services:
       - kafka-broker-1
       - kafka-broker-2
       - kafka-broker-3
+      - elastic-1
+      - elastic-2
+      - elastic-3
     environment:
       - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006 -Xms128m -Xmx256m"
       - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=info"
@@ -47,14 +61,3 @@ services:
     networks:
       - ${GLOBAL_NETWORK:-services}
     restart: on-failure
-  config-server:
-    image: ${GROUP_ID}/config.server:${SERVICE_VERSION:-latest}
-    ports:
-      - "5007:5007"
-      - "8888:8888"
-    volumes:
-      - "./docker-logs:/workspace/config-server/logs"
-    environment:
-      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5007 -Xms128m -Xmx256m"
-    networks:
-      - ${GLOBAL_NETWORK:-services}
