@@ -46,6 +46,7 @@ services:
       - "CONFIG_SERVER_URI=http://config-server:8888"
     networks:
       - ${GLOBAL_NETWORK:-services}
+    restart: on-failure
   config-server:
     image: ${GROUP_ID}/config.server:${SERVICE_VERSION:-latest}
     ports:

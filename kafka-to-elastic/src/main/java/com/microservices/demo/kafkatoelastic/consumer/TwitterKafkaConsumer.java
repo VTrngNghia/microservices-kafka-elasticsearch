@@ -1,4 +1,4 @@
-package com.microservices.demo.kafkatoelastic;
+package com.microservices.demo.kafkatoelastic.consumer;
 
 import com.microservices.demo.appconfig.KafkaConfigValues;
 import com.microservices.demo.kafka.admin.KafkaAdminClient;
@@ -20,6 +20,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroModel> {
+	public static final String LISTENER_ID = "twitterTopicListener";
+
 	@SuppressWarnings({"SpringJavaInjectionPointsAutowiringInspection"})
 	// It is a false positive. IntelliJ's problem.
 	private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
@@ -36,12 +38,11 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 			kafkaConfigValues.getTopicNamesToCreate().toArray()
 		);
 		kafkaListenerEndpointRegistry.getListenerContainer(
-			"twitterTopicListener").start();
+			LISTENER_ID).start();
 	}
 
-
 	@Override
-	@KafkaListener(id = "twitterTopicListener", topics = "${kafka-config.topic-name}")
+	@KafkaListener(id = LISTENER_ID, topics = "${kafka-config.topic-name}")
 	public void receive(
 		@Payload List<TwitterAvroModel> messages,
 		@Header(KafkaHeaders.RECEIVED_KEY) List<Integer> keys,

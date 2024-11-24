@@ -9,9 +9,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 @ComponentScan(basePackages = "com.microservices.demo")
 @SpringBootApplication
 public class KafkaToElastic {
-
 	public static void main(String[] args) {
 		SpringApplication.run(KafkaToElastic.class, args);
 	}
-
 }

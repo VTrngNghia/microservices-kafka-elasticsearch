@@ -48,6 +48,7 @@ services:
       CONFLUENT_SUPPORT_METRICS_ENABLE: "false"
     networks:
       - ${GLOBAL_NETWORK:-kafka}
+    restart: on-failure
   kafka-broker-2:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
     hostname: kafka-broker-2
@@ -65,6 +66,7 @@ services:
       CONFLUENT_SUPPORT_METRICS_ENABLE: "false"
     networks:
       - ${GLOBAL_NETWORK:-kafka}
+    restart: on-failure
   kafka-broker-3:
     image: confluentinc/cp-kafka:${KAFKA_VERSION}
     hostname: kafka-broker-3
@@ -82,3 +84,4 @@ services:
       CONFLUENT_SUPPORT_METRICS_ENABLE: "false"
     networks:
       - ${GLOBAL_NETWORK:-kafka}
+    restart: on-failure
