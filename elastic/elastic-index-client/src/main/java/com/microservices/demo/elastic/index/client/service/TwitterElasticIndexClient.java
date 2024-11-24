@@ -28,7 +28,7 @@ public class TwitterElasticIndexClient<T extends TwitterIndexModel> implements E
 		log.info(
 			"Indexed docs type={} ids={}",
 			TwitterIndexModel.class.getName(),
-			ids
+			ids.size()
 		);
 		return ids;
 	}

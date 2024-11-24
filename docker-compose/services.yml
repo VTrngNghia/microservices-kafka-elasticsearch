@@ -58,6 +58,7 @@ services:
       - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
       - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:8081"
       - "CONFIG_SERVER_URI=http://config-server:8888"
+      - "ELASTICSEARCH_URL=elastic-1:9200"  # Set to the appropriate Elasticsearch service
     networks:
       - ${GLOBAL_NETWORK:-services}
     restart: on-failure

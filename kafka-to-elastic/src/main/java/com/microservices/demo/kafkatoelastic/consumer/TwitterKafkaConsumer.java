@@ -44,8 +44,9 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 			"Topics with name {} is ready for operations!",
 			kafkaConfigValues.getTopicNamesToCreate().toArray()
 		);
-		kafkaListenerEndpointRegistry.getListenerContainer(
-			LISTENER_ID).start();
+		//noinspection DataFlowIssue
+		kafkaListenerEndpointRegistry
+			.getListenerContainer(LISTENER_ID).start();
 	}
 
 	@Override
@@ -57,17 +58,19 @@ public class TwitterKafkaConsumer implements KafkaConsumer<Long, TwitterAvroMode
 		@Header(KafkaHeaders.OFFSET) List<Long> offsets
 	) {
 		log.info(
-			"{} number of message received with keys {}, partitions {} and offsets {}, " +
-				"sending it to elastic: Thread id {}",
+			"Thread={}. Received messages={} keys={} partitions={} offsets={}, " +
+				"indexing to elastic",
+			Thread.currentThread().getId(),
 			messages.size(),
 			keys.toString(),
 			partitions.toString(),
-			offsets.toString(),
-			Thread.currentThread().getId()
+			offsets.toString()
 		);
-		List<TwitterIndexModel> elasticModels = avroToElasticTransformer
+		log.info("Converting to elastic models");
+		List<TwitterIndexModel> elasticDocuments = avroToElasticTransformer
 			.getElasticModels(messages);
-		List<String> ids = elasticIndexClient.save(elasticModels);
-		log.info("Saved documents to elasticsearch ids={}", ids);
+		log.info("Sending to elastic");
+		List<String> ids = elasticIndexClient.save(elasticDocuments);
+		log.info("Saved documents to elasticsearch ids={}", ids.size());
 	}
 }
