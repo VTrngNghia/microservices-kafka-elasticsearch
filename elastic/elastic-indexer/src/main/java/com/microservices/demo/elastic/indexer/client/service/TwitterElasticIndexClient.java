@@ -1,7 +1,7 @@
 package com.microservices.demo.elastic.indexer.client.service;
 
 import com.microservices.demo.elastic.common.model.ElasticTwitterStatus;
-import com.microservices.demo.elastic.indexer.client.repository.TwitterElasticsearchIndexRepository;
+import com.microservices.demo.elastic.indexer.client.repository.TwitterElasticIndexRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,11 +15,11 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 @Slf4j
 public class TwitterElasticIndexClient<T extends ElasticTwitterStatus> implements ElasticIndexClient<T> {
-	private final TwitterElasticsearchIndexRepository twitterElasticsearchIndexRepository;
+	private final TwitterElasticIndexRepository twitterElasticIndexRepository;
 
 	@Override
 	public List<String> save(List<T> documents) {
-		Iterable<T> repositoryResponse = twitterElasticsearchIndexRepository
+		Iterable<T> repositoryResponse = twitterElasticIndexRepository
 			.saveAll(documents);
 		List<String> ids = StreamSupport
 			.stream(repositoryResponse.spliterator(), false)

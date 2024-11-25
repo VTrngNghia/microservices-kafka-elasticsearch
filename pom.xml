@@ -5,10 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>app-config</module>
-        <module>twitter-to-kafka</module>
-        <module>kafka-to-elastic</module>
         <module>kafka</module>
         <module>elastic</module>
+        <module>twitter-to-kafka</module>
+        <module>kafka-to-elastic</module>
+        <module>elastic-searcher</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -84,6 +85,11 @@
             <dependency>
                 <groupId>com.microservices.demo</groupId>
                 <artifactId>elastic-indexer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.microservices.demo</groupId>
+                <artifactId>elastic-querier</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

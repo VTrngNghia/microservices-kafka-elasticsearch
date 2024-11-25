@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: elastic-searcher
+  profiles:
+    active: elastic_querier
+  cloud:
+    config:
+      name: elastic-query-service,config-client
+      uri: ${CONFIG_SERVER_URI:http://localhost:8888}
+      username: demo
+      password: demo
