@@ -58,7 +58,32 @@ services:
       - "KAFKA-CONFIG_BOOTSTRAP-SERVERS=kafka-broker-1:9092, kafka-broker-2:9092, kafka-broker-3:9092"
       - "KAFKA-CONFIG_SCHEMA-REGISTRY-URL=http://schema-registry:8081"
       - "CONFIG_SERVER_URI=http://config-server:8888"
-      - "ELASTICSEARCH_URL=elastic-1:9200"  # Set to the appropriate Elasticsearch service
+      - "ELASTICSEARCH_URL=elastic-1:9200"
     networks:
       - ${GLOBAL_NETWORK:-services}
     restart: on-failure
+  elastic-searcher:
+    image: ${GROUP_ID}/elastic.searcher:${SERVICE_VERSION:-latest}
+    ports:
+      - "5008:5008"
+      - "8183:8183"
+    volumes:
+      - "./docker-logs:/workspace/elastic-searcher/logs"
+    user: root
+    depends_on:
+      - config-server
+      - elastic-1
+      - elastic-2
+      - elastic-3
+    environment:
+      - "JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008 -Xms128m -Xmx256m"
+      - "LOGGING_LEVEL_COM_MICROSERVICES_DEMO=info"
+      - "LOGGING_LEVEL_ROOT=info"
+      - "ELASTIC-CONFIG_INDEX-NAME=twitter-index"
+      - "ELASTIC-CONFIG_CONNECTION-URL=elastic-1:9200"
+      - "SERVER_PORT=8183"
+      - "SERVER_SERVLET_CONTEXT-PATH=/elastic-searcher"
+      - "CONFIG_SERVER_URI=http://config-server:8888"
+      - "ELASTICSEARCH_URL=elastic-1:9200"
+    networks:
+      - ${GLOBAL_NETWORK:-services}

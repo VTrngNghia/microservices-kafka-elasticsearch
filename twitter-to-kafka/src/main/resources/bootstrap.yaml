@@ -17,8 +17,3 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.cloud.config.client: DEBUG
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: env, configprops

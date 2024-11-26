@@ -1,0 +1,7 @@
+springdoc:
+  show-actuator: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: openapi, swagger-ui, env, health, threaddump, metrics, info, loggers, heapdump
