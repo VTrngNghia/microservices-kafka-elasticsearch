@@ -1,15 +1,16 @@
 package com.microservices.demo.elasticsearcher.service;
 
 import com.microservices.demo.elasticsearcher.controller.model.TwitterStatusResponse;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface ElasticQueryService {
 
-	TwitterStatusResponse getDocumentById(String id);
+	Mono<TwitterStatusResponse> getDocumentById(String id);
 
-	List<TwitterStatusResponse> getDocumentByText(String text);
+	Mono<List<TwitterStatusResponse>> getDocumentByText(String text);
 
-	List<TwitterStatusResponse> getAllDocuments();
+	Mono<List<TwitterStatusResponse>> getAllDocuments();
 }
 

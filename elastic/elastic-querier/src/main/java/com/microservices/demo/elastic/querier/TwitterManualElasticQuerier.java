@@ -11,8 +11,11 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
+
+import static reactor.core.publisher.Mono.just;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +31,7 @@ public class TwitterManualElasticQuerier implements ElasticQuerier<ElasticTwitte
 	private final ElasticQueryUtil<ElasticTwitterStatus> elasticQueryUtil;
 
 	@Override
-	public ElasticTwitterStatus getById(String id) {
+	public Mono<ElasticTwitterStatus> getById(String id) {
 		Query query = elasticQueryUtil.getSearchQueryById(id);
 		SearchHit<ElasticTwitterStatus> hit = elasticsearchOperations.searchOne(
 			query,
@@ -39,11 +42,11 @@ public class TwitterManualElasticQuerier implements ElasticQuerier<ElasticTwitte
 			throw new ElasticQuerierException("Can't find document id=" + id);
 		}
 		log.info("Retrieved document id={}", hit.getId());
-		return hit.getContent();
+		return just(hit.getContent());
 	}
 
 	@Override
-	public List<ElasticTwitterStatus> getByText(String text) {
+	public Mono<List<ElasticTwitterStatus>> getByText(String text) {
 		Query query = elasticQueryUtil.getSearchQueryByFieldText(
 			elasticQueryConfigValues.getTextField(), text
 		);
@@ -51,12 +54,12 @@ public class TwitterManualElasticQuerier implements ElasticQuerier<ElasticTwitte
 	}
 
 	@Override
-	public List<ElasticTwitterStatus> getAll() {
+	public Mono<List<ElasticTwitterStatus>> getAll() {
 		Query query = elasticQueryUtil.getSearchQueryForAll();
 		return search(query, "Retrieved documents count={}");
 	}
 
-	private List<ElasticTwitterStatus> search(
+	private Mono<List<ElasticTwitterStatus>> search(
 		Query query,
 		String logMessage,
 		Object... logParams
@@ -67,8 +70,8 @@ public class TwitterManualElasticQuerier implements ElasticQuerier<ElasticTwitte
 			IndexCoordinates.of(elasticConfigValues.getIndexName())
 		);
 		log.info(logMessage, hit.getTotalHits(), logParams);
-		return hit.get()
+		return just(hit.get()
 			.map(SearchHit::getContent)
-			.toList();
+			.toList());
 	}
 }

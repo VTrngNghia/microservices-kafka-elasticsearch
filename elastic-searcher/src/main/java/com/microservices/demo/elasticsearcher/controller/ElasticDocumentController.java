@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.ResponseEntity.ok;
-
 @RestController
 @RequestMapping("/documents")
 @Slf4j
@@ -31,13 +29,14 @@ public class ElasticDocumentController {
 		)
 	)
 	public ResponseEntity<List<TwitterStatusResponse>> getDocuments() {
-		List<TwitterStatusResponse> responses = twitterElasticQueryService
-			.getAllDocuments();
-		log.info(
-			"Returning all documents count={}",
-			responses.size()
-		);
-		return ok(responses);
+		return twitterElasticQueryService.getAllDocuments()
+			.doOnSuccess(response -> log.info(
+				"Returning all documents count={}",
+				response.size()
+			))
+			.map(ResponseEntity::ok)
+			.block()
+			;
 	}
 
 	@GetMapping("/{id}")
@@ -49,10 +48,11 @@ public class ElasticDocumentController {
 	public ResponseEntity<TwitterStatusResponse> getDocument(
 		@PathVariable String id
 	) {
-		TwitterStatusResponse response = twitterElasticQueryService
-			.getDocumentById(id);
-		log.info("Returning document id={}", id);
-		return ok(response);
+		return twitterElasticQueryService.getDocumentById(id)
+			.doOnSuccess(response -> log.info("Returning document id={}", id))
+			.map(ResponseEntity::ok)
+			.block()
+			;
 	}
 
 	@PostMapping("/search")
@@ -64,12 +64,14 @@ public class ElasticDocumentController {
 	public ResponseEntity<List<TwitterStatusResponse>> searchDocuments(
 		@RequestBody @Valid TwitterStatusRequest twitterStatusRequest
 	) {
-		List<TwitterStatusResponse> responses = twitterElasticQueryService
-			.getDocumentByText(twitterStatusRequest.getText());
-		log.info(
-			"Returning documents by text count={}",
-			responses.size()
-		);
-		return ok(responses);
+		return twitterElasticQueryService
+			.getDocumentByText(twitterStatusRequest.getText())
+			.doOnSuccess(response -> log.info(
+				"Returning documents by text count={}",
+				response.size()
+			))
+			.map(ResponseEntity::ok)
+			.block()
+			;
 	}
 }

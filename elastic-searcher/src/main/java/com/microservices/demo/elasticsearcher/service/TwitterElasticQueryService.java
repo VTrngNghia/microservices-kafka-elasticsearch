@@ -7,6 +7,7 @@ import com.microservices.demo.elasticsearcher.controller.model.TwitterStatusResp
 import com.microservices.demo.elasticsearcher.transformer.ElasticToResponseTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -20,30 +21,23 @@ public class TwitterElasticQueryService implements ElasticQueryService {
 	private final TwitterResponseAssembler twitterResponseAssembler;
 
 	@Override
-	public TwitterStatusResponse getDocumentById(String id) {
-//		return elasticToResponseTransformer.toStatusResponse(
-//			elasticQuerier.getById(id)
-//		);
-		return twitterResponseAssembler.toModel(
-			elasticQuerier.getById(id)
-		);
+	public Mono<TwitterStatusResponse> getDocumentById(String id) {
+		return elasticQuerier.getById(id)
+			.map(twitterResponseAssembler::toModel)
+			;
 	}
 
 	@Override
-	public List<TwitterStatusResponse> getDocumentByText(String text) {
-//		return elasticToResponseTransformer.toStatusesResponse(
-//			elasticQuerier.getByText(text)
-//		);
-		return twitterResponseAssembler.toModels(
-			elasticQuerier.getByText(text)
-		);
+	public Mono<List<TwitterStatusResponse>> getDocumentByText(String text) {
+		return elasticQuerier.getByText(text)
+			.map(twitterResponseAssembler::toModels)
+			;
 	}
 
 	@Override
-	public List<TwitterStatusResponse> getAllDocuments() {
-//		return elasticToResponseTransformer.toStatusesResponse(
-//			elasticQuerier.getAll()
-//		);
-		return twitterResponseAssembler.toModels(elasticQuerier.getAll());
+	public Mono<List<TwitterStatusResponse>> getAllDocuments() {
+		return elasticQuerier.getAll()
+			.map(twitterResponseAssembler::toModels)
+			;
 	}
 }

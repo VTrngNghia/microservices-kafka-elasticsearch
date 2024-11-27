@@ -4,4 +4,22 @@ management:
   endpoints:
     web:
       exposure:
-        include: openapi, swagger-ui, env, health, threaddump, metrics, info, loggers, heapdump
+        include: "*"
+logging:
+  level:
+    #    org.springdoc: DEBUG
+    #    org.springdoc.core: DEBUG
+    root: DEBUG
+    org: INFO
+    org.springframework: INFO
+    org.apache: INFO
+    sun: INFO
+    javax: INFO
+    io: INFO
+    jdk: INFO
+    jakarta: INFO
+    org.springdoc: DEBUG
+#    org.springdoc.core: DEBUG
+#    org.springdoc.api: DEBUG
+#    org.springdoc.webmvc: DEBUG
+#    org.springdoc.ui: DEBUG

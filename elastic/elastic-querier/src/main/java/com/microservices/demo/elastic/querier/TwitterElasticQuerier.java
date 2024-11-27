@@ -5,10 +5,12 @@ import com.microservices.demo.elastic.querier.repository.TwitterElasticQueryRepo
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.util.Streamable;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
+
+import static reactor.core.publisher.Mono.error;
 
 @Primary
 @Service
@@ -18,35 +20,37 @@ public class TwitterElasticQuerier implements ElasticQuerier<ElasticTwitterStatu
 	private final TwitterElasticQueryRepository twitterElasticQueryRepository;
 
 	@Override
-	public ElasticTwitterStatus getById(String id) {
+	public Mono<ElasticTwitterStatus> getById(String id) {
 
 		return twitterElasticQueryRepository
 			.findById(id)
-			.map(t -> {
-				log.info("Retrieved document id={}", t.getId());
-				return t;
-			})
-			.orElseThrow(() ->
+			.doOnSuccess(t -> log.info("Retrieved document id={}", t.getId()))
+			.switchIfEmpty(error(
 				new ElasticQuerierException("Can't find document id=" + id)
-			);
+			));
 	}
 
 	@Override
-	public List<ElasticTwitterStatus> getByText(String text) {
-		List<ElasticTwitterStatus> searchResult = twitterElasticQueryRepository
-			.findByText(text);
-		log.info(
-			"Retrieved documents count={} text={}", searchResult.size(), text
-		);
-		return searchResult;
+	public Mono<List<ElasticTwitterStatus>> getByText(String text) {
+		return twitterElasticQueryRepository
+			.findByText(text)
+			.collectList()
+			.doOnSuccess(res -> log.info(
+				"Retrieved documents count={} text={}",
+				res.size(),
+				text
+			))
+			;
 	}
 
 	@Override
-	public List<ElasticTwitterStatus> getAll() {
-		List<ElasticTwitterStatus> searchResult = Streamable.of(
-			twitterElasticQueryRepository.findAll()
-		).toList();
-		log.info("Retrieved documents count={}", searchResult.size());
-		return searchResult;
+	public Mono<List<ElasticTwitterStatus>> getAll() {
+		return twitterElasticQueryRepository
+			.findAll()
+			.collectList()
+			.doOnSuccess(res -> log.info(
+				"Retrieved documents count={}",
+				res.size()
+			));
 	}
 }
